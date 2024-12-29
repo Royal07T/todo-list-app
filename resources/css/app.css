@@ -2,63 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #343a40; /* Dark background */
-    color: #f8f9fa; /* Light text color for readability */
+/* Custom table styling */
+table.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
 }
 
-/* Set navigation to a darker shade */
-nav {
-    background-color: #212529; /* Darker nav background */
-    color: #f8f9fa; /* Light text in the nav */
+/* Task badges */
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5em 0.75em;
+    border-radius: 0.5em;
 }
 
-/* Table styling */
-table {
-    background-color: #495057; /* Light gray table background */
-    color: #f8f9fa; /* Light text for table */
+/* Center the header */
+h1 {
+    font-family: "Arial", sans-serif;
+    color: #333;
+}
+/* Custom form styles */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
-/* Header cells styling */
-th {
-    background-color: #6c757d; /* Dark gray for the table header */
-    color: #f8f9fa; /* Light text in the header */
+/* Hover effect for the submit button */
+#createTaskButton {
+    transition: all 0.3s ease;
 }
 
-/* Badge colors for task status */
-.badge-success {
-    background-color: #28a745; /* Green for completed tasks */
+/* Focus effect for title input */
+#title:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.badge-warning {
-    background-color: #ffc107; /* Yellow for pending tasks */
+/* Text-muted styling for the help text */
+small.form-text.text-muted {
+    font-size: 0.875rem;
+    color: #6c757d;
 }
 
-/* Button styling */
-.btn-primary {
-    background-color: #007bff; /* Blue for the primary button */
+/* Custom form styles */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
 }
 
-.btn-warning {
-    background-color: #ffc107; /* Yellow for the edit button */
+/* Hover effect for buttons */
+button {
+    transition: all 0.3s ease;
 }
 
-.btn-danger {
-    background-color: #dc3545; /* Red for the delete button */
+/* Focus effect for form fields */
+input:focus,
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Customize the form buttons to fit the dark theme */
-.btn {
-    border-radius: 0.25rem;
-}
-
-/* Container styling */
-.container {
-    margin-top: 30px;
-}
-
-/* Table rows and columns styling */
-td,
-th {
-    padding: 15px; /* Add padding for better spacing */
+/* Text-muted styling for the help text */
+small.form-text.text-muted {
+    font-size: 0.875rem;
+    color: #6c757d;
 }

@@ -22,6 +22,11 @@
                         <div class="absolute hidden mt-2 bg-gray-800 border border-gray-700 rounded shadow-lg group-hover:block">
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700">Settings</a>
                             <a href="{{ route('profile.edit-password') }}" class="block px-4 py-2 text-gray-300 hover:bg-gray-700">Change Password</a>
+                            <form method="POST" action="{{ route('profile.destroy') }}" onsubmit="return confirm('Are you sure you want to delete your account?')" class="block px-4 py-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:text-red-800">Delete Account</button>
+                            </form>
                         </div>
                     </li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
@@ -43,6 +48,11 @@
                         <li><a href="{{ route('profile.settings') }}" class="text-gray-300 no-underline hover:text-white">Profile</a></li>
                         <li><a href="{{ route('profile.edit') }}" class="text-gray-300 no-underline hover:text-white">Settings</a></li>
                         <li><a href="{{ route('profile.edit-password') }}" class="text-gray-300 no-underline hover:text-white">Change Password</a></li>
+                        <form method="POST" action="{{ route('profile.destroy') }}" onsubmit="return confirm('Are you sure you want to delete your account?')" class="block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="w-full px-4 py-2 text-left text-red-600 hover:text-red-800">Delete Account</button>
+                        </form>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
                             @csrf
                             <button type="submit" class="w-full px-4 py-2 text-left text-gray-300 hover:bg-gray-700">Logout</button>
