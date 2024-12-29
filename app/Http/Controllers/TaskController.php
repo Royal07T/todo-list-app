@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,6 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        // Get tasks for the authenticated user, with optional search functionality.
         $tasks = Task::where('user_id', Auth::id())
             ->when($request->search, function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->search . '%');
@@ -33,8 +33,10 @@ class TaskController extends Controller
             ->latest()
             ->get();
 
+
         return view('tasks.index', compact('tasks'));
     }
+
 
     /**
      * Show the form to create a new task.
@@ -54,21 +56,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate task input
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'completed' => 'nullable|boolean', // Validate that it's either null or a boolean
         ]);
 
-        // Create the task for the authenticated user
         Task::create([
             'user_id' => Auth::id(),
             'title' => $validated['title'],
-            'description' => $validated['description'],
+            'description' => $validated['description'] ?? null,
+            'completed' => $request->has('completed') ? 1 : 0, // Set completed to 1 if checked, otherwise 0
         ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
     }
+
+
+
 
     /**
      * Display the details of a specific task.
@@ -105,17 +110,23 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validate updated task input
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'completed' => 'nullable|boolean',
         ]);
 
-        $task = Task::where('user_id', Auth::id())->findOrFail($id);
-        $task->update($validated);
+        $task = Task::findOrFail($id);
+
+        $task->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'completed' => $request->has('completed') ? 1 : 0, // Update completed status based on checkbox
+        ]);
 
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully!');
     }
+
 
     /**
      * Remove a task from the database for the authenticated user.

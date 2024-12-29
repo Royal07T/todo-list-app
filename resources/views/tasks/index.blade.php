@@ -1,4 +1,4 @@
-dd($tasks)
+<!-- resources/views/tasks/index.blade.php -->
 
 @extends('layouts.app')
 
@@ -24,7 +24,13 @@ dd($tasks)
                     <tr>
                         <td>{{ $task->id }}</td>
                         <td>{{ $task->title }}</td>
-                        <td>{{ $task->completed ? 'Completed' : 'Pending' }}</td>
+                        <td>
+                            @if($task->completed)
+                                <span class="badge bg-success">Completed</span> <!-- Green for Completed -->
+                            @else
+                                <span class="badge bg-warning">Pending</span> <!-- Yellow for Pending -->
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">

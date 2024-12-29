@@ -1,3 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background-color: #343a40; /* Dark background */
+    color: #f8f9fa; /* Light text color for readability */
+}
+
+/* Set navigation to a darker shade */
+nav {
+    background-color: #212529; /* Darker nav background */
+    color: #f8f9fa; /* Light text in the nav */
+}
+
+/* Table styling */
+table {
+    background-color: #495057; /* Light gray table background */
+    color: #f8f9fa; /* Light text for table */
+}
+
+/* Header cells styling */
+th {
+    background-color: #6c757d; /* Dark gray for the table header */
+    color: #f8f9fa; /* Light text in the header */
+}
+
+/* Badge colors for task status */
+.badge-success {
+    background-color: #28a745; /* Green for completed tasks */
+}
+
+.badge-warning {
+    background-color: #ffc107; /* Yellow for pending tasks */
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #007bff; /* Blue for the primary button */
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Yellow for the edit button */
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Red for the delete button */
+}
+
+/* Customize the form buttons to fit the dark theme */
+.btn {
+    border-radius: 0.25rem;
+}
+
+/* Container styling */
+.container {
+    margin-top: 30px;
+}
+
+/* Table rows and columns styling */
+td,
+th {
+    padding: 15px; /* Add padding for better spacing */
+}
