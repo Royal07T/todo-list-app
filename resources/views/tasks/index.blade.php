@@ -13,7 +13,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>#</th>
+
                     <th>Task</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -22,7 +22,7 @@
             <tbody>
                 @forelse ($tasks as $task)
                     <tr>
-                        <td>{{ $task->id }}</td>
+
                         <td>{{ $task->title }}</td>
                         <td>
                             @if($task->completed)
