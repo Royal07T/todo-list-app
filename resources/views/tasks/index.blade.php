@@ -2,7 +2,14 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-center mb-4">Task List</h1>
+        <h1 class="mb-4 text-center">Task List</h1>
+
+        <!-- Flash message -->
+        @if (session('success'))
+            <div id="flashMessage" class="text-center alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <!-- Button to add a new task -->
         <a href="{{ route('tasks.create') }}" class="mb-3 btn btn-primary">Add New Task</a>
@@ -28,18 +35,26 @@
                             @endif
                         </td>
                         <td>
+                            <!-- View button -->
+                            <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-info btn-sm">View</a>
+
+                            <!-- Edit button -->
                             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <button
-                                class="btn btn-danger btn-sm delete-btn"
-                                data-task-id="{{ $task->id }}"
-                                data-task-title="{{ $task->title }}">
-                                Delete
-                            </button>
+
+                            <!-- Delete button -->
+                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to delete this task?')">
+                                    Delete
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center">No tasks found.</td>
+                        <td colspan="3" class="text-center">No tasks found.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -49,34 +64,14 @@
 
 @push('scripts')
 <script>
-    // Confirmation dialog for delete buttons
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const taskId = this.dataset.taskId;
-            const taskTitle = this.dataset.taskTitle;
-            if (confirm(`Are you sure you want to delete the task: "${taskTitle}"?`)) {
-                // Create a form dynamically and submit it
-                const form = document.createElement('form');
-                form.action = `/tasks/${taskId}`;
-                form.method = 'POST';
-
-                const csrfInput = document.createElement('input');
-                csrfInput.type = 'hidden';
-                csrfInput.name = '_token';
-                csrfInput.value = "{{ csrf_token() }}";
-
-                const methodInput = document.createElement('input');
-                methodInput.type = 'hidden';
-                methodInput.name = '_method';
-                methodInput.value = 'DELETE';
-
-                form.appendChild(csrfInput);
-                form.appendChild(methodInput);
-                document.body.appendChild(form);
-
-                form.submit();
-            }
-        });
+    // Hide flash message after 2 seconds
+    document.addEventListener('DOMContentLoaded', () => {
+        const flashMessage = document.getElementById('flashMessage');
+        if (flashMessage) {
+            setTimeout(() => {
+                flashMessage.style.display = 'none';
+            }, 2000);
+        }
     });
 
     // Smooth hover effects
@@ -88,12 +83,6 @@
         row.addEventListener('mouseleave', () => {
             row.style.backgroundColor = '';
         });
-    });
-
-    // Animation for adding a new task
-    const addButton = document.querySelector('.btn-primary');
-    addButton.addEventListener('click', () => {
-        alert('Redirecting to create a new task...');
     });
 </script>
 @endpush
